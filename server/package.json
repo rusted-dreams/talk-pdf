@@ -13,12 +13,18 @@
   "license": "ISC",
   "packageManager": "pnpm@10.12.4",
   "dependencies": {
+    "@langchain/community": "^0.3.47",
+    "@langchain/core": "^0.3.61",
+    "@langchain/openai": "^0.5.16",
+    "@langchain/qdrant": "^0.1.2",
     "@types/node": "^24.0.7",
     "bullmq": "^5.56.0",
     "cors": "^2.8.5",
     "dotenv": "^17.0.0",
     "express": "^5.1.0",
-    "multer": "^2.0.1"
+    "langchain": "^0.3.29",
+    "multer": "^2.0.1",
+    "pdf-parse": "^1.1.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
