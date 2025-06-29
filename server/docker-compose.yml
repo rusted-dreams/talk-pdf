@@ -1,9 +1,12 @@
 services:
-  valkey:
-    image: valkey/valkey
+  # valkey:
+  #   image: valkey/valkey
+  #   ports: 
+  #     - 6379:6379
+  redis:
+    image: redis
     ports: 
       - 6379:6379
-
   quadrant:
     image: qdrant/qdrant
     ports: 

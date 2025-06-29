@@ -1,14 +1,17 @@
 import express from "express";
 import cors from "cors";
 import multer from "multer";
-import { Queue } from "bullmq";
+// import { Queue } from "bullmq";
+import Redis from "ioredis";
 
-const queue = new Queue("file-upload-queue", {
-  connection: {
-    host: "localhost",
-    port: "6379"
-  }
-})
+const redis = new Redis();
+
+// const queue = new Queue("file-upload-queue", {
+//   connection: {
+//     host: "localhost",
+//     port: "6379"
+//   }
+// })
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -33,16 +36,16 @@ app.get("/", (req, res) => {
 })
 
 app.post("/api/upload/pdf", upload.single("pdf"), async (req, res) => {
-  // add the file to the queue
-  await queue.add('file-ready',
-    JSON.stringify({
-      filename: req.file.originalname,
-      destination: req.file.destination,
-      path: req.file.path
-    })
-  )
+  const jobData = {
+    filename: req.file.originalname,
+    destination: req.file.destination,
+    path: req.file.path
+  };
 
-  res.json({ msg: "uploaded" })
+  await redis.lpush("bull:file-upload-queue", JSON.stringify(jobData));
+  console.log("📤 Job pushed to queue");
+
+  res.json({ msg: "uploaded" });
 })
 
 app.listen(8000, () => {

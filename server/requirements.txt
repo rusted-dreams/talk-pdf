@@ -1,0 +1,4 @@
+redis
+pymupdf
+sentence-transformers 
+qdrant-client
